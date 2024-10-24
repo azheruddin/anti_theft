@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "anti_theft_user.app"
-               BlueprintName = "anti_theft_user"
-               ReferencedContainer = "container:anti_theft_user.xcodeproj">
+               BuildableName = "MobileSafeApp.app"
+               BlueprintName = "MobileSafeApp"
+               ReferencedContainer = "container:MobileSafeApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "anti_theft_userTests.xctest"
-               BlueprintName = "anti_theft_userTests"
-               ReferencedContainer = "container:anti_theft_user.xcodeproj">
+               BuildableName = "MobileSafeAppTests.xctest"
+               BlueprintName = "MobileSafeAppTests"
+               ReferencedContainer = "container:MobileSafeApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "anti_theft_user.app"
-            BlueprintName = "anti_theft_user"
-            ReferencedContainer = "container:anti_theft_user.xcodeproj">
+            BuildableName = "MobileSafeApp.app"
+            BlueprintName = "MobileSafeApp"
+            ReferencedContainer = "container:MobileSafeApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "anti_theft_user.app"
-            BlueprintName = "anti_theft_user"
-            ReferencedContainer = "container:anti_theft_user.xcodeproj">
+            BuildableName = "MobileSafeApp.app"
+            BlueprintName = "MobileSafeApp"
+            ReferencedContainer = "container:MobileSafeApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
