@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "481574044476",
+    "project_id": "anti-theft-project-554b0",
+    "storage_bucket": "anti-theft-project-554b0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481574044476:android:aa1af589e1f259e5e81439",
+        "android_client_info": {
+          "package_name": "com.mobilesafeapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3yI-8xCGf-2awpVXIWIrPXt7Q9tM28rQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
