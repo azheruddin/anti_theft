@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<device-admin xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-policies>
+        <!-- Allows monitoring password attempts -->
+        <watch-login />
+
+        <!-- Enables the app to enforce password restrictions -->
+        <limit-password />
+
+        <!-- Allows the app to reset the device's password -->
+        <reset-password />
+
+        <!-- Enables the app to wipe data as a last resort -->
+        <wipe-data />
+    </uses-policies>
+</device-admin>

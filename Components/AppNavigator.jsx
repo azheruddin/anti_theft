@@ -1,485 +1,498 @@
-// Siddik bhai
+// import { StyleSheet, Text, View, Modal, TextInput, TouchableOpacity } from 'react-native';
+// import React, { useState, useEffect } from 'react';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import DrawerNavigation from './DrawerNavigation';
 
-import { Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import Home from './Home';
-import Entypo from 'react-native-vector-icons/Entypo';
-import CustomDrawer from './CustomDrawer';
-import HideMobileSafe01 from './Screens/HideMobileSafe01';
-import About from './Screens/About';
-import AppGuide from './Screens/AppGuide';
-import ContactBackup from './Screens/ContactBackup';
-import EmergencyMode from './Screens/EmergencyMode';
-import HelpLine from './Screens/HelpLine';
-import CustomHeader from './Screens/CustomHeader';
-import BottomTabNavigator from './BottomTabNavigator';
+// const AppNavigator = ( {navigation} ) => {
+//   const [isActivated, setIsActivated] = useState(false);
+//   const [activationCode, setActivationCode] = useState('');
+//   const [modalVisible, setModalVisible] = useState(true);
+//   const [userId, setUserId] = useState(null);
+
+//   useEffect(() => {
+//     const fetchUserId = async () => {
+//       try {
+//         const userDetailsString = await AsyncStorage.getItem('userDetails');
+//         if (userDetailsString) {
+//           const userDetails = JSON.parse(userDetailsString);
+//           if (userDetails.id) {
+//             setUserId(userDetails.id);
+//             console.log('User ID found:', userDetails.id);
+//           } else {
+//             console.log('User ID not found in user details.');
+//             alert('User ID not found in user details. Please login again.');
+//           }
+//         } else {
+//           console.log('User details not found.');
+//           alert('User details not found. Please login again.');
+//         }
+//       } catch (error) {
+//         console.error('Error fetching user details:', error);
+//       }
+//     };
+
+//     fetchUserId();
+//   }, []);
+
+//   const handleActivationSubmit = async () => {
+//     if (!activationCode || !userId) {
+//       alert('Please enter the activation code and ensure user ID is available.');
+//       return;
+//     }
+
+//     try {
+//       const response = await fetch('http://192.168.0.102/Anti_theft/public/api/verify-key', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           key_code: activationCode,
+//           user_id: userId,
+//         }),
+//       });
+
+//       const data = await response.json();
+
+//       if (response.ok && data.success) {
+//         navigation.navigate('DrawerNavigation');
+//         setIsActivated(true);
+//         setModalVisible(false);
+
+//       } else {
+//         alert(data.message || 'Invalid activation code. Please try again.');
+//       }
+//     } catch (error) {
+//       console.error('Error verifying activation code:', error);
+//       alert('An error occurred. Please try again.');
+//     } finally {
+//       // Input ko blank karne ke liye
+//       setActivationCode('');
+//     }
+//   };
+
+//   return (
+//     <>
+//       <Modal visible={modalVisible} transparent animationType="slide">
+//         <View style={styles.modalContainer}>
+//           <View style={styles.modalContent}>
+//             <Text style={styles.title}>Enter Activation Code</Text>
+//             <TextInput
+//               style={styles.input}
+//               placeholder="Enter code"
+//               value={activationCode}
+//               onChangeText={setActivationCode}
+//             />
+
+//             <TouchableOpacity style={styles.button} onPress={handleActivationSubmit}>
+//               <Text style={styles.buttonText}>Submit</Text>
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+//       </Modal>
+
+//       {/* {isActivated && <DrawerNavigation />} */}
+//     </>
+//   );
+// };
+
+// export default AppNavigator;
+
+// const styles = StyleSheet.create({
+//   modalContainer: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#111e11',
+//     padding: 20,
+//   },
+//   modalContent: {
+//     width: '100%',
+//     backgroundColor: '#fff',
+//     padding: 20,
+//     borderRadius: 10,
+//     elevation: 5,
+//   },
+//   title: {
+//     fontSize: 20,
+//     marginBottom: 15,
+//     textAlign: 'center',
+//   },
+//   input: {
+//     height: 40,
+//     borderColor: '#ccc',
+//     borderWidth: 1,
+//     marginBottom: 15,
+//     paddingHorizontal: 10,
+//     borderRadius: 5,
+//   },
+//   button: {
+//     backgroundColor: '#ECD974',
+//     padding: 12,
+//     borderRadius: 8,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     width: '50%',
+//     alignSelf: 'center',
+//   },
+//   buttonText: {
+//     color: '#000',
+//     fontSize: 16,
+//     fontWeight: 'bold',
+//   },
+// });
+
+// Main last code
+
+// import React, { useEffect, useState } from 'react';
+// import { StyleSheet, Text, View, Modal, TextInput, TouchableOpacity } from 'react-native';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// const AppNavigator = ({ navigation }) => {
+//   const [isActivated, setIsActivated] = useState(false);
+//   const [activationCode, setActivationCode] = useState('');
+//   const [modalVisible, setModalVisible] = useState(true);
+//   const [userId, setUserId] = useState(null);
+
+//   useEffect(() => {
+//     const fetchUserId = async () => {
+//       try {
+//         const userDetailsString = await AsyncStorage.getItem('userDetails');
+//         if (userDetailsString) {
+//           const userDetails = JSON.parse(userDetailsString);
+//           if (userDetails.id) {
+//             setUserId(userDetails.id);
+//             console.log('User ID found:', userDetails.id);
+//           } else {
+//             console.log('User ID not found in user details.');
+//             alert('User ID not found in user details. Please login again.');
+//           }
+//         } else {
+//           console.log('User details not found.');
+//           alert('User details not found. Please login again.');
+//         }
+//       } catch (error) {
+//         console.error('Error fetching user details:', error);
+//       }
+//     };
+
+//     fetchUserId();
+//   }, []);
+
+//   const handleActivationSubmit = async () => {
+//     if (!activationCode || !userId) {
+//       alert('Please enter the activation code and ensure user ID is available.');
+//       return;
+//     }
+
+//     try {
+//       const response = await fetch('http://192.168.0.102/Anti_theft/public/api/verify-key', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//           key_code: activationCode,
+//           user_id: userId,
+//         }),
+//       });
+
+//       const data = await response.json();
+
+//       if (response.ok && data.success) {
+//         setIsActivated(true);
+//         setModalVisible(false); // Modal बंद कर देंगे
+
+//         // DrawerNavigation पर navigate
+//         navigation.navigate("DrawerNavigation")
+//       } else {
+//         alert(data.message || 'Invalid activation code. Please try again.');
+//       }
+//     } catch (error) {
+//       console.error('Error verifying activation code:', error);
+//       alert('An error occurred. Please try again.');
+//     } finally {
+//       setActivationCode(''); // Input blank करेंगे
+//     }
+//   };
+
+//   if (!isActivated && modalVisible) {
+//     return (
+//       <Modal visible={modalVisible} transparent animationType="slide">
+//         <View style={styles.modalContainer}>
+//           <View style={styles.modalContent}>
+//             <Text style={styles.title}>Enter Activation Code</Text>
+//             <TextInput
+//               style={styles.input}
+//               placeholder="Enter code"
+//               value={activationCode}
+//               onChangeText={setActivationCode}
+//             />
+//             <TouchableOpacity style={styles.button} onPress={handleActivationSubmit}>
+//               <Text style={styles.buttonText}>Submit</Text>
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+//       </Modal>
+//     );
+//   }
+
+//   // Activated case handled by navigation reset
+//   return null;
+// };
+
+// export default AppNavigator;
+
+// const styles = StyleSheet.create({
+//   modalContainer: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#111e11',
+//     padding: 20,
+//   },
+//   modalContent: {
+//     width: '100%',
+//     backgroundColor: '#fff',
+//     padding: 20,
+//     borderRadius: 10,
+//     elevation: 5,
+//   },
+//   title: {
+//     fontSize: 20,
+//     marginBottom: 15,
+//     textAlign: 'center',
+//   },
+//   input: {
+//     height: 40,
+//     borderColor: '#ccc',
+//     borderWidth: 1,
+//     marginBottom: 15,
+//     paddingHorizontal: 10,
+//     borderRadius: 5,
+//   },
+//   button: {
+//     backgroundColor: '#ECD974',
+//     padding: 12,
+//     borderRadius: 8,
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     width: '50%',
+//     alignSelf: 'center',
+//   },
+//   buttonText: {
+//     color: '#000',
+//     fontSize: 16,
+//     fontWeight: 'bold',
+//   },
+// });
+
+import React, {useEffect, useState, useRef} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Login from './Login';
+import SignInRegister from './Register';
+import Splash from './Splash';
+import Fitness from './Fitness/Fitness';
+import DailyWorkout2 from './Fitness/DailyWorkout2';
+import GenderSelection from './Fitness/GenderSelection';
+import AddEmergencyContact from './AddUpdateContact/AddEmergencyContact';
+import UpdateContact from './AddUpdateContact/UpdateContact';
+import DrawerNavigation from './DrawerNavigation';
+import PhoneNumber from './Permission/PhoneNumber';
 
 import Permission from './Permission/Permission';
 import CallLogScreen from './Permission/CallLogScreen';
 import MediaGalleryScreen from './Permission/MediaGalleryScreen ';
 import IMEINumberScreen from './Permission/IMEINumberScreen';
+import Siren from './Permission/Siren';
+import MovingPhoneSiren from './Permission/MovingPhoneSiren';
+import USB from './Permission/USB';
+import SendMessage from './Permission/SendMessage';
+import DeviceAdminFeature from './Permission/DeviceAdminFeature ';
+import SendSmsSiren from './Permission/SendSmsSiren';
+import {NativeEventEmitter, NativeModules} from 'react-native';
 
-const Drawer = createDrawerNavigator();
-const AppNavigator = () => {
+const Stack = createNativeStackNavigator();
+const {DeviceEventManagerModule} = NativeModules;
+
+
+function AppNavigator() {
+  const [isSplashVisible, setSplashVisible] = useState(true);
+  const navigationRef = useRef();
+  // const [isLoggedIn, setIsLoggedIn] = useState(null);
+
+  useEffect(() => {
+    // const checkUserLogin = async () => {
+    //   try {
+    //     const userId = await AsyncStorage.getItem('userId');
+    //     setIsLoggedIn(!!userId); // userId ho to true, warna false
+    //   } catch (error) {
+    //     console.error('Error checking user login status:', error);
+    //     setIsLoggedIn(false); // Default to logged out
+    //   }
+    // };
+
+    const timer = setTimeout(() => {
+      setSplashVisible(false);
+      // checkUserLogin();
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const eventEmitter = new NativeEventEmitter(DeviceEventManagerModule);
+    const subscription = eventEmitter.addListener('openScreen', (screen) => {
+      if (screen === 'SendSmsSiren') {
+        navigationRef.current?.navigate('SendSmsSiren');
+      }
+    });
+  
+    return () => subscription.remove(); 
+  }, []);
+  
+
+  // Ensure navigation based on `isLoggedIn`
+  if (isSplashVisible) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Splash"
+            component={Splash}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+
   return (
-    <Drawer.Navigator
-     drawerContent={(props) => <CustomDrawer {...props} />}
-     screenOptions={{
-      drawerStyle: {
-        backgroundColor: 'rgba(36, 27, 27, 0.9)',  // Same background as CustomDrawer
-      },
-    }}
-     >
-        <Drawer.Screen
-        name="Mobile Safe"
-        component={BottomTabNavigator} // Har screen par BottomTabs visible honge
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="Mobile Safe" />,
-        }}
-       
-      />
-      {/* <Drawer.Screen
-        name="Mobile Safe"
-        component={Home}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="Mobile Safe" />,
-        }}
-      /> */}
-      <Drawer.Screen
-        name="HideMobileSafe01"
-        component={HideMobileSafe01}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="Hide Mobile Safe" />,
-        }}
-      />
-      <Drawer.Screen
-        name="EmergencyMode"
-        component={EmergencyMode}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="Emergency Mode" />,
-        }}
-      />
-      <Drawer.Screen
-        name="AppGuide"
-        component={AppGuide}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="App Guide" />,
-        }}
-      />
-      <Drawer.Screen
-        name="ContactBackup"
-        component={ContactBackup}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="Contact Backup" />,
-        }}
-      />
-      <Drawer.Screen
-        name="HelpLine"
-        component={HelpLine}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="Help Line" />,
-        }}
-      />
-      <Drawer.Screen
-        name="About"
-        component={About}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="About" />,
-        }}
-      />
+    <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator>
+        {/* <Stack.Screen
+          name="SignInRegister"
+          component={SignInRegister}
+          options={{ headerShown: false }}
+        />  */}
+        <Stack.Screen
+          name="DrawerNavigation"
+          component={DrawerNavigation}
+          options={{headerShown: false}}
+        />
 
+        {/* Fitness */}
+        <Stack.Screen
+          name="Fitness"
+          component={Fitness}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DailyWorkout2"
+          component={DailyWorkout2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="GenderSelection"
+          component={GenderSelection}
+          options={{headerShown: false}}
+        />
 
+        {/* Permission */}
+        <Stack.Screen
+          name="Permission"
+          component={Permission}
+          options={{headerShown: false}}
+        />
 
-      {/* Dummy */}
-      {/* permission */}
-      <Drawer.Screen
-        name="Permission"
-        component={Permission}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="About" />,
-        }}
-      />
-      {/* CallLogScreen */}
-      <Drawer.Screen
-        name="CallLogScreen"
-        component={CallLogScreen}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="About" />,
-        }}
-      />
-      {/* MediaGalleryScreen */}
-      <Drawer.Screen
-        name="MediaGalleryScreen"
-        component={MediaGalleryScreen}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="About" />,
-        }}
-      />
-      {/* IMEINumberScreen */}
-      <Drawer.Screen
-        name="IMEINumberScreen"
-        component={IMEINumberScreen}
-        options={{
-          header: ({ navigation }) => <CustomHeader navigation={navigation} title="About" />,
-        }}
-      />
+        {/* CallLogScreen */}
+        <Stack.Screen
+          name="CallLogScreen"
+          component={CallLogScreen}
+          options={{headerShown: false}}
+        />
 
-    </Drawer.Navigator>
+        {/* MediaGalleryScreen */}
+        <Stack.Screen
+          name="MediaGalleryScreen"
+          component={MediaGalleryScreen}
+          options={{headerShown: false}}
+        />
+
+        {/* IMEINumberScreen */}
+        <Stack.Screen
+          name="IMEINumberScreen"
+          component={IMEINumberScreen}
+          options={{headerShown: false}}
+        />
+
+        {/* Siren */}
+        <Stack.Screen
+          name="Siren"
+          component={Siren}
+          options={{headerShown: false}}
+        />
+
+        {/* MovingPhoneSiren */}
+        <Stack.Screen
+          name="MovingPhoneSiren"
+          component={MovingPhoneSiren}
+          options={{headerShown: false}}
+        />
+
+        {/* USB */}
+        <Stack.Screen
+          name="USB"
+          component={USB}
+          options={{headerShown: false}}
+        />
+
+        {/* AddEmergencyContact */}
+        <Stack.Screen
+          name="AddEmergencyContact"
+          component={AddEmergencyContact}
+          options={{headerShown: false}}
+        />
+
+        {/* UpdateContact */}
+        <Stack.Screen
+          name="UpdateContact"
+          component={UpdateContact}
+          options={{headerShown: false}}
+        />
+
+        {/* PhoneNumber */}
+        <Stack.Screen
+          name="PhoneNumber"
+          component={PhoneNumber}
+          options={{headerShown: false}}
+        />
+
+        {/* SendMessage */}
+        <Stack.Screen
+          name="SendMessage"
+          component={SendMessage}
+          options={{headerShown: false}}
+        />
+
+        {/* DeviceAdminFeature */}
+        <Stack.Screen
+          name="DeviceAdminFeature"
+          component={DeviceAdminFeature}
+          options={{headerShown: false}}
+        />
+
+        {/* SendSmsSiren */}
+        <Stack.Screen
+          name="SendSmsSiren"
+          component={SendSmsSiren}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-};
+}
 
-export default AppNavigator
-
-const styles = StyleSheet.create({
-  customHeader: {
-    height: 70,
-    backgroundColor: '#111e11',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ECD974',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 8,
-  }
-  ,
-  headerTitle: {
-    fontSize: 24,
-    color: '#ECD974',
-    marginLeft: 8,
-    fontWeight: '500'
-  },
-  headerLeftSection: {
-    width: '55%',
-    display: 'flex',
-    flexDirection: 'row',
-    height: '100%',
-    paddingLeft: 10,
-    paddingTop: 10
-
-  },
-  headerRightSection: {
-    width: '45%',
-    height: '100%'
-  },
-  headerImg: {
-    width: 100,
-    height: 105,
-    marginLeft: 70,
-    marginTop: 1
-  }
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 2
-
-// import React from 'react';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import Home from './Home';
-// import CustomDrawer from './CustomDrawer';
-// import HideMobileSafe01 from './Screens/HideMobileSafe01';
-// import EmergencyMode from './Screens/EmergencyMode';
-// import ContactBackup from './Screens/ContactBackup';
-// import AppGuide from './Screens/AppGuide';
-// import HelpLine from './Screens/HelpLine';
-// import About from './Screens/About';
-// import { StyleSheet, Text, View } from 'react-native';
-// import Entypo from 'react-native-vector-icons/Entypo';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// // TabScreen
-
-// import Remote from './TabScreen/Remote';
-// import DontTouch from './TabScreen/DontTouch';
-// import WomenChild from './TabScreen/WomenChild';
-
-// const Drawer = createDrawerNavigator();
-// const Stack = createNativeStackNavigator();
-// const Tab = createBottomTabNavigator();
-
-// // Bottom Tab Navigator
-// const TabNavigator = () => (
-//   <Tab.Navigator
-//   screenOptions={{
-//     headerShown: false,
-//     tabBarStyle: {
-//       position: 'absolute',
-//       backgroundColor: 'rgba(45, 54, 20, 0.9)',
-//       borderTopWidth: 0,
-//       elevation: 0,
-//       zIndex: 999, // Increase z-index here
-//       height: 81, // Set height to 81px
-//       borderTopLeftRadius: 14, // Set top-left border radius
-//       borderTopRightRadius: 14, // Set top-right border radius
-//     },
-//   }}
-
-//   >
-//     <Tab.Screen name="Home" component={Home} />
-//     <Tab.Screen name="Remote" component={Remote} />
-//     <Tab.Screen name="DontTouch" component={DontTouch} />
-//     <Tab.Screen name="WomenChild" component={WomenChild} />
-//   </Tab.Navigator>
-
-// );
-
-// // Stack Navigator for Drawer Screens with Tabs
-// const DrawerStackNavigator = () => (
-//   <Stack.Navigator>
-//     <Stack.Screen name="MainTabs" component={TabNavigator} options={{ headerShown: false }} />
-//     <Stack.Screen name="HideMobileSafe01" component={HideMobileSafe01} />
-//     <Stack.Screen name="EmergencyMode" component={EmergencyMode} />
-//     <Stack.Screen name="ContactBackup" component={ContactBackup} />
-//     <Stack.Screen name="AppGuide" component={AppGuide} />
-//     <Stack.Screen name="HelpLine" component={HelpLine} />
-//     <Stack.Screen name="About" component={About} />
-//   </Stack.Navigator>
-// );
-
-// // Drawer Navigator with Stack and Tab Navigators Inside
-// const AppNavigator = () => {
-//   return (
-//     <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
-//       <Drawer.Screen
-//         name="DrawerStack"
-//         component={DrawerStackNavigator}
-//         options={{
-//           header: ({ navigation }) => (
-//             <View style={styles.customHeader}>
-//               <View style={styles.headerLeftSection}>
-//                 <Text onPress={() => navigation.openDrawer()}>
-//                   <Entypo name="menu" size={35} color="#ECD974" />
-//                 </Text>
-//                 <Text style={styles.headerTitle}>Mobile Safe</Text>
-//               </View>
-//             </View>
-//           ),
-//         }}
-//       />
-//     </Drawer.Navigator>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   customHeader: {
-//     height: 70,
-//     backgroundColor: '#111e11',
-//     borderBottomWidth: 1,
-//     borderBottomColor: '#ECD974',
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     paddingVertical: 8,
-//   },
-//   headerTitle: {
-//     fontSize: 24,
-//     color: '#ECD974',
-//     marginLeft: 8,
-//     fontWeight: '500',
-//   },
-//   headerLeftSection: {
-//     width: '55%',
-//     flexDirection: 'row',
-//     height: '100%',
-//     paddingLeft: 10,
-//     paddingTop: 10,
-//   },
-// });
-
-// export default AppNavigator;
-
-// 3
-
-// import React from 'react';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import Home from './Home';
-// import CustomDrawer from './CustomDrawer';
-// import HideMobileSafe01 from './Screens/HideMobileSafe01';
-// import EmergencyMode from './Screens/EmergencyMode';
-// import ContactBackup from './Screens/ContactBackup';
-// import AppGuide from './Screens/AppGuide';
-// import HelpLine from './Screens/HelpLine';
-// import About from './Screens/About';
-// import { StyleSheet, Text, View, Image } from 'react-native';
-// import Entypo from 'react-native-vector-icons/Entypo';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-
-// // TabScreen
-// import Remote from './TabScreen/Remote';
-// import DontTouch from './TabScreen/DontTouch';
-// import WomenChild from './TabScreen/WomenChild';
-
-// const Drawer = createDrawerNavigator();
-// const Stack = createNativeStackNavigator();
-// const Tab = createBottomTabNavigator();
-
-//  Custom Tab Icon Component
-// const CustomTabIcon = ({ source, label, customStyle, iconStyle }) => (
-//   <View style={[{ alignItems: 'center', marginTop: 10 }, customStyle]}>
-//     <Image source={source} style={[{ width: 24, height: 24 }, iconStyle]} />
-//     <Text style={{ color: '#fff', fontSize: 12, width: '100%' }}>{label}</Text>
-//   </View>
-// );
-
-
-// const TabNavigator = () => (
-//   <Tab.Navigator
-//     screenOptions={{
-//       headerShown: false,
-//       tabBarStyle: {
-//         position: 'absolute',
-//         backgroundColor: 'rgba(45, 54, 20, 0.9)',
-//         borderTopWidth: 0,
-//         elevation: 0,
-//         zIndex: 999,
-//         height: 81,
-//         borderTopLeftRadius: 14,
-//         borderTopRightRadius: 14,
-//       },
-//     }}
-//   >
-//     <Tab.Screen
-//       name="Home"
-//       component={Home}
-//       options={{
-//         tabBarIcon: () => (
-//           <CustomTabIcon
-//             source={require('../image/Mobile_Safe/HomeBottomNav.png')}
-//             label="Home"
-//             customStyle={{ marginTop: 5, backgroundColor: 'rgba(255, 255, 255, 0.1)', borderRadius: 10 }}
-//             iconStyle={{ width: 28, height: 28 }} // Home icon size
-//           />
-//         ),
-//         tabBarLabel: () => null,
-//       }}
-//     />
-//     <Tab.Screen
-//       name="Remote"
-//       component={Remote}
-//       options={{
-//         tabBarIcon: () => (
-//           <CustomTabIcon
-//             source={require('../image/Mobile_Safe/remoteBottomNav.png')}
-//             label="Remote"
-//             customStyle={{ marginTop: 8, backgroundColor: 'rgba(0, 0, 255, 0.1)', borderRadius: 10 }}
-//             iconStyle={{ width: 32, height: 32 }} // Remote icon size
-//           />
-//         ),
-//         tabBarLabel: () => null,
-//       }}
-//     />
-    // <Tab.Screen
-    //   name="DontTouch"
-    //   component={DontTouch}
-    //   options={{
-    //     tabBarIcon: () => (
-    //       <CustomTabIcon
-    //         source={require('../image/Mobile_Safe/donttouchBottomNav.png')}
-    //         label="DontTouch"
-    //         customStyle={{ marginTop: 10, backgroundColor: 'rgba(255, 0, 0, 0.1)', borderRadius: 10 }}
-    //         iconStyle={{ width: 32, height: 34 }} // DontTouch icon size
-    //       />
-    //     ),
-    //     tabBarLabel: () => null,
-    //   }}
-    // />
-    // <Tab.Screen
-    //   name="WomenChild"
-    //   component={WomenChild}
-    //   options={{
-    //     tabBarIcon: () => (
-    //       <CustomTabIcon
-    //         source={require('../image/Mobile_Safe/WomenBottomNav.png')}
-    //         label="WomenChild"
-    //         customStyle={{ marginTop: 7, backgroundColor: 'rgba(0, 255, 0, 0.1)', borderRadius: 10 }}
-    //         iconStyle={{ width: 36, height: 36 }} // WomenChild icon size
-    //       />
-    //     ),
-    //     tabBarLabel: () => null,
-    //   }}
-    // />
-//   </Tab.Navigator>
-// );
-
-
-
-
-
-// // Stack Navigator for Drawer Screens with Tabs
-// const DrawerStackNavigator = () => (
-//   <Stack.Navigator>
-//     <Stack.Screen name="MainTabs" component={TabNavigator} options={{ headerShown: false }} />
-//     <Stack.Screen name="HideMobileSafe01" component={HideMobileSafe01} />
-//     <Stack.Screen name="EmergencyMode" component={EmergencyMode} />
-//     <Stack.Screen name="ContactBackup" component={ContactBackup} />
-//     <Stack.Screen name="AppGuide" component={AppGuide} />
-//     <Stack.Screen name="HelpLine" component={HelpLine} />
-//     <Stack.Screen name="About" component={About} />
-//   </Stack.Navigator>
-// );
-
-// // Drawer Navigator with Stack and Tab Navigators Inside
-// const AppNavigator = () => {
-//   return (
-//     <Drawer.Navigator drawerContent={props => <CustomDrawer {...props} />}>
-//       <Drawer.Screen
-//         name="DrawerStack"
-//         component={DrawerStackNavigator}
-//         options={{
-//           header: ({ navigation }) => (
-//             <View style={styles.customHeader}>
-//               <View style={styles.headerLeftSection}>
-//                 <Text onPress={() => navigation.openDrawer()}>
-//                   <Entypo name="menu" size={35} color="#ECD974" />
-//                 </Text>
-//                 <Text style={styles.headerTitle}>Mobile Safe</Text>
-//               </View>
-//             </View>
-//           ),
-//         }}
-//       />
-//     </Drawer.Navigator>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   customHeader: {
-//     height: 70,
-//     backgroundColor: '#111e11',
-//     borderBottomWidth: 1,
-//     borderBottomColor: '#ECD974',
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     paddingVertical: 8,
-//   },
-//   headerTitle: {
-//     fontSize: 24,
-//     color: '#ECD974',
-//     marginLeft: 8,
-//     fontWeight: '500',
-//   },
-//   headerLeftSection: {
-//     width: '55%',
-//     flexDirection: 'row',
-//     height: '100%',
-//     paddingLeft: 10,
-//     paddingTop: 10,
-//   },
-// });
-
-// export default AppNavigator;
-
-
+export default AppNavigator;

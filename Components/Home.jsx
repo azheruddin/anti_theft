@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity, Dimensions } from 'react-native';
 // import Hide from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import { Switch } from 'react-native-switch';
+import axios from 'axios';
+import API_ENDPOINTS from '../BaseURL/BaseURL';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
 
   // Switch button's state
   const [panicMode, setPanicMode] = useState(false);
@@ -19,7 +22,41 @@ const Home = ({navigation}) => {
   const [childProtection, setchildProtection] = useState(false);
   const [powerOn, setPowerOn] = useState(false);
 
+  const [contact1, setContact1] = useState('');
+  const [contact2, setContact2] = useState('');
+  const [keyStatus, setKeyStatus] = useState(0);
 
+  useEffect(() => {
+    const fetchEmergencyContacts = async () => {
+      try {
+        const storedUserDetails = await AsyncStorage.getItem('userDetails');
+        if (storedUserDetails) {
+          const parsedData = JSON.parse(storedUserDetails);
+          setKeyStatus(parsedData.key_status);
+
+          // Fetch contacts if key_status === 1
+          if (parsedData.key_status === 1) {
+            const response = await axios.get(API_ENDPOINTS.FETCHINGCONTACT, {
+              params: { user_id: parsedData.id },
+            });
+
+            if (response.status === 200 && response.data.data && response.data.data.length > 0) {
+              console.log('API Response:', response.data);
+              const contactData = response.data.data[0];
+              setContact1(contactData.mobile_1 || '');
+              setContact2(contactData.mobile_2 || '');
+            } else {
+              console.error('No contacts found:', response.data);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+      }
+    };
+
+    fetchEmergencyContacts();
+  }, []);
 
 
   return (
@@ -27,21 +64,36 @@ const Home = ({navigation}) => {
       <View style={styles.background}>
 
         {/* Heading===01 */}
+
         <LinearGradient
-          colors={['#DBFF79', '#FFFFFF']} // Define gradient colors
-          start={{ x: 0, y: 0 }} // Starting point of gradient (left)
-          end={{ x: 1, y: 0 }}   // Ending point of gradient (right)
-          style={styles.header1} // Apply to header container
+          colors={['#DBFF79', '#FFFFFF']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.header1}
         >
-          <TouchableOpacity style={styles.headerContent1}
-          onPress={()=>navigation.navigate('AddEmergencyContact')}
-          >
-            <Image
-              source={require('../image/Mobile_Safe/Alert.png')}
-              style={{ width: 62, height: 62 }}
-            />
-            <Text style={styles.headerTitle1}>Add Emergency Contact</Text>
-          </TouchableOpacity>
+          {keyStatus === 1 && contact1 ? (
+            // agar munber pahle ye add hai to ye show hoga  
+            <TouchableOpacity
+              style={styles.headerContent1}
+              onPress={() => navigation.navigate('UpdateContact')}
+            >
+              <Text style={styles.headerTitle1}>Update Emergency Contact</Text>
+              <Text style={styles.contactText}>{`Contact-1 : ${contact1}`}</Text>
+              <Text style={styles.contactText}>{`Contact-2 : ${contact2 || 'Not Available'}`}</Text>
+            </TouchableOpacity>
+          ) : (
+            // agar munber pahle ye add nhi hai to ye show hoga  
+            <TouchableOpacity
+              style={styles.headerContent1}
+              onPress={() => navigation.navigate('AddEmergencyContact')}
+            >
+              <Image
+                source={require('../image/Mobile_Safe/Alert.png')}
+                style={{ width: 62, height: 62 }}
+              />
+              <Text style={styles.headerTitle2}>Add Emergency Contact</Text>
+            </TouchableOpacity>
+          )}
         </LinearGradient>
 
         {/* Heading===02 */}
@@ -52,7 +104,7 @@ const Home = ({navigation}) => {
           style={styles.header2}          // Apply to header container
         >
           <TouchableOpacity style={styles.headerContent2}
-          onPress={()=>navigation.navigate('Fitness')}
+            onPress={() => navigation.navigate('Fitness')}
           >
             <Image
               source={require('../image/Mobile_Safe/Womenheader2.png')}
@@ -539,6 +591,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     // paddingHorizontal: 16,
     // paddingVertical: 20,
+    marginTop:-6
   },
   background: {
     flexDirection: 'row',      // Row mein arrange karne ke liye
@@ -569,11 +622,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  headerTitle1: {
+  headerTitle2: {
     fontSize: 18,
     color: '#101E11',
     fontWeight: '700',
-    textAlign:'center'
+    textAlign: 'center'
   },
   // Women&ChildSafety
   header2: {
@@ -594,15 +647,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
+  headerTitle1: {
+    fontSize: 15,
+    color: '#101E11',
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 10
+  },
+  contactText: {
+    fontSize: 12,
+    color: '#101E11',
+    fontWeight: '500',
+    textAlign: 'center',
+
+  },
   headerTitle2: {
     fontSize: 18,
     color: '#101E11',
     fontWeight: '700',
-    textAlign:'center'
+    textAlign: 'center'
 
   },
 
-// Cards
+  // Cards
   card: {
     width: 163,
     height: 109,
@@ -649,7 +716,10 @@ const styles = StyleSheet.create({
 
   },
 
-  
+
+
+
+
 });
 
 export default Home;
@@ -658,54 +728,54 @@ export default Home;
 
 
 // headerText: {
-  //   color: '#ECD974',
-  //   fontSize: 18,
-  //   fontWeight: 'bold',
-  // },
-  // card: {
-  //   // backgroundColor: '#927b40',
-  //   // backgroundColor:"#edda74",
-  //   backgroundColor: '#fff',
-  //   borderRadius: 8,
-  //   padding: 16,
-  //   marginBottom: 12,
-  //   width: '90%',
-  //   height:140,
-  //   marginLeft: 18,
-  // },
-  // cardTitle: {
-  //   fontSize: 20,
-  //   // marginTop:3,
-  //   fontWeight: 'bold',
-  //   color: 'black',
-  //   // backgroundColor: '#927b40',
+//   color: '#ECD974',
+//   fontSize: 18,
+//   fontWeight: 'bold',
+// },
+// card: {
+//   // backgroundColor: '#927b40',
+//   // backgroundColor:"#edda74",
+//   backgroundColor: '#fff',
+//   borderRadius: 8,
+//   padding: 16,
+//   marginBottom: 12,
+//   width: '90%',
+//   height:140,
+//   marginLeft: 18,
+// },
+// cardTitle: {
+//   fontSize: 20,
+//   // marginTop:3,
+//   fontWeight: 'bold',
+//   color: 'black',
+//   // backgroundColor: '#927b40',
 
-  //   height: 40,
-  //   marginTop: 6,
-  //   marginBottom: 8,
-  //   marginLeft: 10,
-  // },
-  // cardDescription: {
-  //   fontSize: 14,
-  //   color: '#555555',
-  //   marginBottom: 16,
+//   height: 40,
+//   marginTop: 6,
+//   marginBottom: 8,
+//   marginLeft: 10,
+// },
+// cardDescription: {
+//   fontSize: 14,
+//   color: '#555555',
+//   marginBottom: 16,
 
-  // },
-  // mainiconsection: {
-  //   width: '100%',
-  //   height: 42,
+// },
+// mainiconsection: {
+//   width: '100%',
+//   height: 42,
 
-  //   // backgroundColor: 'red',
-  //   display: 'flex',
-  //   flexDirection: 'row',
-  // },
-  // button: {
-  //   marginLeft: 10,
-  //   marginTop: 5,
-  //   position: 'absolute',
-  //   right: -10,
-  // },
-  // imageicon: {
-  //   width: 35,
-  //   height: 40,
-  // },
+//   // backgroundColor: 'red',
+//   display: 'flex',
+//   flexDirection: 'row',
+// },
+// button: {
+//   marginLeft: 10,
+//   marginTop: 5,
+//   position: 'absolute',
+//   right: -10,
+// },
+// imageicon: {
+//   width: 35,
+//   height: 40,
+// },

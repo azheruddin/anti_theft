@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import API_ENDPOINTS from '../BaseURL/BaseURL';
 
 
 
@@ -26,35 +27,97 @@ const MENU_ITEMS = [
     { id: '5', image: require('../image/Mobile_Safe/AppGuideMenu5.png'), label: 'HelpLine', route: 'HelpLine' },
     { id: '6', image: require('../image/Mobile_Safe/AboutMenu6.png'), label: 'About', route: 'About' },
     { id: '8', image: require('../image/Mobile_Safe/LogoutMenu7.png'), label: 'Register', route: 'SignInRegister' },
-    
+
 ];
 
 
 const CustomDrawer = ({ navigation }) => {
-
+    const [userId, setUserId] = useState(null);
+    const [keyStatus, setKeyStatus] = useState(0);
+    const [userName, setUserName] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [error, setError] = useState(null);
     const [userDetails, setUserDetails] = useState({ name: '', phone: '' });
 
     // AsyncStorage se data fetch karna
-    const fetchUserDetails = async () => {
-        try {
-            const userData = await AsyncStorage.getItem('userDetails');
-            if (userData) {
-                const { name, phone } = JSON.parse(userData); // JSON parse karke destructure
-                setUserDetails({ name, phone }); // State update
-                // console.log('Name:', name);
-                // console.log('Phone:', phone);
-            } else {
-                console.log('No user data found!');
-            }
-        } catch (error) {
-            console.error('Error fetching user details:', error);
-        }
-    };
+    // const fetchUserDetails = async () => {
+    //     try {
+    //         const userData = await AsyncStorage.getItem('userDetails');
+    //         if (userData) {
+    //             const { name, phone } = JSON.parse(userData); // JSON parse karke destructure
+    //             setUserDetails({ name, phone }); // State update
+    //             // console.log('Name:', name);
+    //             // console.log('Phone:', phone);
+    //         } else {
+    //             console.log('No user data found!');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching user details:', error);
+    //     }
+    // };
 
     // Component load hone par data fetch karna
+    // useEffect(() => {
+    //     fetchUserDetails();
+    // }, []);
+
+
+
+
+    //   user ki Details ko fetch karne ke liye API se
     useEffect(() => {
-        fetchUserDetails();
+        const fetchUserDetail = async () => {
+            try {
+                // Get user details from AsyncStorage
+                const userDetailsString = await AsyncStorage.getItem('userDetails');
+                const userDetails = JSON.parse(userDetailsString);
+
+                if (userDetails && userDetails.id) {
+                    console.log('Fetched User ID:', userDetails.id); // Debug log
+                    setUserId(userDetails.id);
+
+                    // Call the API with the user_id (using GET method)
+                    const response = await fetch(API_ENDPOINTS.USER(userDetails.id), {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.statusText}`);
+                    }
+
+                    const responseData = await response.json();
+
+                    if (responseData.status === true) {
+                        const user = responseData.data;
+
+                        if (user) {
+                            console.log('Fetched User Details:', user); // Debug log
+                            setUserName(user.name || 'Not available');
+                            setPhoneNumber(user.phone || 'Not available');
+                        } else {
+                            console.log('User details are missing in the response.');
+                            setUserName('Not available');
+                            setPhoneNumber('Not available');
+                        }
+                    } else {
+                        throw new Error(responseData.message || 'Failed to fetch user details.');
+                    }
+                } else {
+                    console.log('No User ID found. Please log in again.');
+                    setError('User ID not found. Please log in again.');
+                }
+            } catch (err) {
+                console.error('Error fetching user details:', err);
+                setError(err.message || 'An unexpected error occurred.');
+            }
+        };
+
+        fetchUserDetail();
     }, []);
+
 
     return (
         <View style={styles.container}>
@@ -85,10 +148,10 @@ const CustomDrawer = ({ navigation }) => {
 
                     <View style={styles.UserInformationContainer}>
                         <Text style={styles.name}>
-                            {userDetails.name || "Name not available"}
+                            {userName ? userName : "Name not available"}
                         </Text>
                         <Text style={styles.phone}>
-                            +91 {userDetails.phone || "Phone not available"}
+                            {phoneNumber ? `+91 ${phoneNumber}` : "Phone not available"}
                         </Text>
                         <TouchableOpacity style={styles.NameIcon}>
                             <Image source={require('../image/Mobile_Safe/Edit3.png')}
@@ -188,13 +251,13 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderColor: '#ECD974',
     },
-    UserInformationContainer:{
-        width:200
+    UserInformationContainer: {
+        width: 200
     },
     name: {
         fontSize: 20,
         color: '#fff',
-        marginRight:17
+        marginRight: 17
     },
     phone: {
         marginTop: 8,
